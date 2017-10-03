@@ -25,6 +25,10 @@ namespace EmbeddedWebsiteTest
 
         public static IWebHost BuildWebHost(string[] args)
         {
+            // http://localhost:5000
+            // Error - 4092 EACCES permission denied on WS2012R2 + IIS #193
+            // Means port is BUSY - hence adjust in hosting.json
+
             IConfigurationRoot config = new ConfigurationBuilder()
                 .SetBasePath(System.IO.Directory.GetCurrentDirectory())
                 .AddJsonFile("hosting.json", true)
