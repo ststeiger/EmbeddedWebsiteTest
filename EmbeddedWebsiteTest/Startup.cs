@@ -42,6 +42,7 @@ namespace EmbeddedWebsiteTest
             }
             else
             {
+                // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling
                 app.UseExceptionHandler("/Error");
             }
 
@@ -72,8 +73,9 @@ namespace EmbeddedWebsiteTest
             //options.DefaultFileNames.Add("index.html");
             //app.UseDefaultFiles(options);
 
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files
             app.UseStaticFiles();
-            app.UseFileServer();
+            app.UseFileServer(enableDirectoryBrowsing: false);
 
 
             /*
