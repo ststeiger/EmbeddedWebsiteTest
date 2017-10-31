@@ -27,15 +27,24 @@
 
 </head>
 <body>
+    <input type="hidden" value="uid" />
+
+    <iframe style="display: none;" src="logUA" frameborder="0"></iframe>
+    <!--
+        saves ua-header-string
+        returns uid+cookie with uid (take uid from cookie if present)
+        ajax with uid+ua-data+screen+os
+    -->
+    
     <h1 id="navi"></h1>
 
     <h1 id="browserFamily"></h1>
     <h1 id="majorVersion"></h1>
     <h1 id="fullVersion"></h1>
     <h1 id="geckoVersion"></h1>
-    
+
     <script type="text/javascript">
-        
+
         // Edge 15:          Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063
         // Edge 12 (Spartan) Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
         // Edge 13:          Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
@@ -53,7 +62,7 @@
 
         // Safari: Mozilla / 5.0(Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/536.26.14 (KHTML, like Gecko) Version/6.0.1 Safari/536.26.14
         // Chrome: Mozilla / 5.0(Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4
-        
+
         var navi = document.getElementById("navi");
         var browserFamily = document.getElementById("browserFamily");
         var majorVersion = document.getElementById("majorVersion");
@@ -76,7 +85,7 @@
 
                 var r1 = new RegExp("(" + brow.toLowerCase() + "(?=\\/))\\/?\\s*([\\d]+)", "i");
                 var r2 = new RegExp("(" + brow.toLowerCase() + "(?=\\/))\\/?\\s*([\\d\\.]+)", "i");
-                
+
                 if (brow == "msie")
                 {
                     r1 = new RegExp("(msie\\s*([\\d]+))", "i");
@@ -89,7 +98,7 @@
                     var geck = ua.match(r3) || [];
                     ver.gecko = geck[2];
                 }
-                
+
                 var vMain = ua.match(r1) || [];
                 var vExact = ua.match(r2) || [];
                 ver.main = vMain[2] || -1;
@@ -101,7 +110,7 @@
 
             // var vMain = ua.match(/(chrome(?=\/))\/?\s*([\d]+)/i) || [];
             // var vExact = ua.match(/(chrome(?=\/))\/?\s*([\d\.]+)/i) || [];
-            
+
 
 
             function isChromium()
@@ -125,7 +134,7 @@
                 processor: -1,
                 bit: -1,
             };
-            
+
 
             if (ua.indexOf("edge/") != -1)
             {
@@ -146,7 +155,7 @@
             else if (ua.indexOf("chrome/") != -1 && isChromium()) // chrome
             {
                 ver = getVersion(ua, "Chromium", "Chrome", ver);
-            } 
+            }
             else if (ua.indexOf("chrome/") != -1) // chrome
             {
                 ver = getVersion(ua, "Chrome", "Chrome", ver);
@@ -246,7 +255,7 @@
 
         var tnFamily = document.createTextNode(vers.family);
         browserFamily.appendChild(tnFamily);
-        
+
         var tnMajor = document.createTextNode(vers.main);
         majorVersion.appendChild(tnMajor);
 
