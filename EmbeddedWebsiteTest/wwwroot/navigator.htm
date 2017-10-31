@@ -29,8 +29,8 @@
 <body>
     <input type="hidden" value="uid" />
 
-    <iframe style="display: none;" src="logUA" frameborder="0"></iframe>
     <!--
+        <iframe style="display: none;" src="logUA" frameborder="0"></iframe>
         saves ua-header-string
         returns uid+cookie with uid (take uid from cookie if present)
         ajax with uid+ua-data+screen+os
@@ -44,6 +44,85 @@
     <h1 id="geckoVersion"></h1>
 
     <script type="text/javascript">
+
+
+        var _navigator = {};
+        for (var i in navigator) _navigator[i] = navigator[i];
+
+        delete _navigator.plugins;
+        delete _navigator.mimeTypes;
+
+
+        _navigator.plugins = [];
+        _navigator.mimeTypes = [];
+
+        
+        for (var i = 0; i < navigator.plugins.length; i++)
+        {
+            _navigator.plugins.push({
+                name: navigator.plugins[i].name,
+                filename: navigator.plugins[i].filename,
+                description: navigator.plugins[i].description
+            });
+
+        }
+
+
+        for (var i = 0; i < navigator.mimeTypes.length; i++)
+        {
+            _navigator.mimeTypes.push({
+                type: navigator.mimeTypes[i].type,
+                suffix: navigator.mimeTypes[i].suffix,
+                description: navigator.mimeTypes[i].description
+                //,enabledPlugin: []
+            });
+
+        }
+
+        var js = JSON.stringify(_navigator, null, 3);
+        console.log(js);
+        /*
+        // specify polyfills & check
+        // load check load polyfills
+        // load scripts by dependency
+
+        // https://jsfiddle.net/koldev/cW7W5/
+
+        function saveMe(data, fileName)
+        {
+
+            var json = JSON.stringify(data),
+                blob = new Blob([json], { type: "octet/stream" }),
+                url = window.URL.createObjectURL(blob);
+
+            if (navigator.msSaveOrOpenBlob)
+            {
+                navigator.msSaveOrOpenBlob(blob, fileName);
+                return;
+            }
+            else if (window.navigator.msSaveBlob)
+            { // for IE browser
+                window.navigator.msSaveBlob(blob, fileName);
+                return;
+            }
+
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+
+        var data = { x: 42, s: "hello, world", d: new Date() }, fileName = "my-download.json";
+
+        // saveData(data, fileName);
+        saveMe(data, fileName);
+         */
+
 
         // Edge 15:          Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063
         // Edge 12 (Spartan) Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
