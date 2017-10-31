@@ -73,6 +73,7 @@
             var getVersion = function (ua, family, brow, ver)
             {
                 ver.family = family;
+
                 var r1 = new RegExp("(" + brow.toLowerCase() + "(?=\\/))\\/?\\s*([\\d]+)", "i");
                 var r2 = new RegExp("(" + brow.toLowerCase() + "(?=\\/))\\/?\\s*([\\d\\.]+)", "i");
                 
@@ -103,6 +104,18 @@
             
 
 
+            function isChromium()
+            {
+
+                for (var i = 0, u = "Chromium", l = u.length; i < navigator.plugins.length; i++)
+                {
+                    if (navigator.plugins[i].name != null && navigator.plugins[i].name.substr(0, l) === u)
+                        return true;
+                }
+
+                return false;
+            }
+
             var ver = {
                 family: "Unknown",
                 main: -1,
@@ -130,6 +143,10 @@
             {
                 ver = getVersion(ua, "Opera", "opr", ver);
             }
+            else if (ua.indexOf("chrome/") != -1 && isChromium()) // chrome
+            {
+                ver = getVersion(ua, "Chromium", "Chrome", ver);
+            } 
             else if (ua.indexOf("chrome/") != -1) // chrome
             {
                 ver = getVersion(ua, "Chrome", "Chrome", ver);
